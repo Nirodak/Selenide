@@ -1,5 +1,4 @@
 import com.codeborne.selenide.*;
-import com.codeborne.selenide.conditions.TextCondition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
