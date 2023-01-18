@@ -32,19 +32,27 @@ public class TestForm {
     void TestValid() {
         enterValue("иванов иван иванович", "+79184564545");
         $(withText("Ваша заявка успешно отправлена!")).shouldBe(visible);
-        Configuration.holdBrowserOpen = true;
     }
+
     @Test
-    public void TestInvalidName(){
-    enterValue("ivan","+79546548484");
+    void TestInvalidName() {
+        enterValue("ivan", "+79546548484");
         $(withText("Имя и Фамилия указаные неверно")).shouldBe(visible);
-        Configuration.holdBrowserOpen = true;
     }
+
     @Test
-    public void TestInvalidPhone(){
-        enterValue("Петр Сергеевич","plus sem");
+    void TestInvalidPhone() {
+        enterValue("Петр Сергеевич", "plus sem");
         element.$$(".input__sub").last().shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например," +
                 " +79012345678."));
-        Configuration.holdBrowserOpen = true;
+    }
+
+    @Test
+    void TestCheckBox() {
+        $("[name='name']").setValue("Иванов Иван Иванович");
+        $("[name='phone']").setValue("+79181181818");
+        $("[class='button__text']").click();
+        $(".input_invalid[data-test-id='agreement").shouldBe(visible);
+
     }
 }
