@@ -19,7 +19,7 @@ public class TestForm {
     }
 
     private void enterValue(String name, String number) {
-        element = $(By.className("App_appContainer__3jRx1"));
+        element = $("form");
         element.$("[name='name']").setValue(name);
         element.$("[name='phone']").setValue(number);
         element.$("[class='checkbox__text']").click();
@@ -31,19 +31,24 @@ public class TestForm {
     void testValid() {
         enterValue("иванов иван иванович", "+79184564545");
         $(withText("Ваша заявка успешно отправлена!")).shouldBe(visible);
+
+
     }
 
     @Test
     void testInvalidName() {
         enterValue("ivan", "+79546548484");
-        $(withText("Имя и Фамилия указаные неверно")).shouldBe(visible);
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно." +
+                " Допустимы только русские буквы, пробелы и дефисы."));
+
     }
 
     @Test
     void testInvalidPhone() {
         enterValue("Петр Сергеевич", "plus sem");
-        element.$$(".input__sub").last().shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например," +
+        $("[data-test-id='phone'].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например," +
                 " +79012345678."));
+
     }
 
     @Test
@@ -51,7 +56,13 @@ public class TestForm {
         $("[name='name']").setValue("Иванов Иван Иванович");
         $("[name='phone']").setValue("+79181181818");
         $("[class='button__text']").click();
-        $(".input_invalid[data-test-id='agreement").shouldBe(visible);
+        $("[data-test-id='agreement'].input_invalid").shouldBe(visible);
+
+    }
+    @Test
+    void nullValues(){
+        $("[class='button__text']").click();
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
 
     }
 }
