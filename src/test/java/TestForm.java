@@ -28,26 +28,26 @@ public class TestForm {
     }
 
     @Test
-    void TestValid() {
+    void testValid() {
         enterValue("иванов иван иванович", "+79184564545");
         $(withText("Ваша заявка успешно отправлена!")).shouldBe(visible);
     }
 
     @Test
-    void TestInvalidName() {
+    void testInvalidName() {
         enterValue("ivan", "+79546548484");
         $(withText("Имя и Фамилия указаные неверно")).shouldBe(visible);
     }
 
     @Test
-    void TestInvalidPhone() {
+    void testInvalidPhone() {
         enterValue("Петр Сергеевич", "plus sem");
         element.$$(".input__sub").last().shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например," +
                 " +79012345678."));
     }
 
     @Test
-    void TestCheckBox() {
+    void testCheckBox() {
         $("[name='name']").setValue("Иванов Иван Иванович");
         $("[name='phone']").setValue("+79181181818");
         $("[class='button__text']").click();
