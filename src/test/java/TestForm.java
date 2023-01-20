@@ -59,10 +59,30 @@ public class TestForm {
         $("[data-test-id='agreement'].input_invalid").shouldBe(visible);
 
     }
+
     @Test
-    void nullValues(){
+    void nullValues() {
         $("[class='button__text']").click();
         $("[data-test-id='name'].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
 
+    }
+
+    @Test
+    void nullName() {
+        $("[name='phone']").setValue("+79181181818");
+        $("[class='checkbox__text']").click();
+        $("[class='button__text']").click();
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+        Configuration.holdBrowserOpen = true;
+
+    }
+
+    @Test
+    void nullPhone() {
+        $("[name='name']").setValue("Иванов Иван Иванович");
+        $("[class='checkbox__text']").click();
+        $("[class='button__text']").click();
+        $("[data-test-id='phone'].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+        Configuration.holdBrowserOpen = true;
     }
 }
